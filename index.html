@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tonix TX - Diseño Web & Automatización</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Estilos Generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            scroll-behavior: smooth;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+            border-top: none;
+            border-bottom: none;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        /* Línea dorada que va de esquina a esquina */
+        header::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            background-color: #CDA434; /* Dorado cremoso */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #CDA434; /* Dorado cremoso */
+            font-family: 'Raleway', sans-serif;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: default;
+        }
+        .logo:hover {
+            color: #FFE6A8; /* Tono dorado más claro */
+        }
+        .logo::after {
+            content: '';
+            display: none;
+            width: 100%;
+            height: 1px;
+            background: #CDA434;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        .header-right-items {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        nav {
+            display: flex;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            position: relative;
+            white-space: nowrap;
+        }
+        nav a::after {
+            content: '';
+            display: block;
+            width: 0%;
+            height: 2px;
+            background: #00ffff;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .language-switcher i {
+            font-size: 1.3rem;
+            color: #ffd700;
+            transition: color 0.3s ease;
+        }
+        .language-switcher:hover i {
+            color: #CDA434; /* Color dorado al pasar el cursor */
+        }
+
+        /* Secciones */
+        section {
+            padding: 100px 20px;
+            text-align: center;
+            background-color: #000; /* Todas las secciones con fondo oscuro por defecto */
+            color: #fff;
+        }
+        section + section {
+            margin-top: 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to right, #111, #222);
+            padding-top: 140px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #CDA434;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 20px auto;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        .btn {
+            background-color: #00ffff;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #00bfae;
+            transform: scale(1.05);
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #CDA434;
+            letter-spacing: 0.05em;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            /* Estos estilos se eliminan si no queremos el contenedor blanco */
+            /* background-color: #f8f8f8;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            max-width: 1200px;
+            color: #333; */
+        }
+
+        /* Tarjetas (cards) */
+        .card {
+            background: #1a1a1a; /* Las tarjetas mantienen su fondo oscuro */
+            padding: 25px; 
+            border-radius: 12px;
+            width: 280px;
+            border: 2px solid transparent; 
+            transition: border 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4); 
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px); 
+            border: 2px solid #00ffff; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+        .card h3 {
+            letter-spacing: 0.03em;
+            margin-bottom: 15px; 
+            color: #fff; /* Título blanco por defecto en la tarjeta */
+            transition: color 0.3s ease; 
+        }
+        .card:hover h3 {
+            color: #00ffff; /* Título cian al hacer hover */
+        }
+
+        /* Párrafos en Tarjetas */
+        .card p {
+            line-height: 1.6; 
+            margin-bottom: 10px; 
+            color: #ccc; /* Color gris suave para el texto de las tarjetas */
+        }
+
+        /* Reseñas (Reviews) */
+        .reviews .card p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 70px;
+            line-height: 1.4; 
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .reviews .card .profile {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+            justify-content: center;
+            padding-top: 10px; 
+        }
+        .reviews .card strong {
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        /* Contacto */
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .contact-icons a {
+            font-size: 2.5rem;
+            text-decoration: none;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .contact-icons a:hover {
+            transform: scale(1.3) rotate(10deg);
+        }
+        .contact-icons a:nth-child(1) { color: #1877f2; } /* Facebook */
+        .contact-icons a:nth-child(2) { color: #25d366; } /* WhatsApp */
+        .contact-icons a:nth-child(3) { color: #e4405f; } /* Instagram */
+
+        /* Tooltip para nombres de redes sociales */
+        .contact-icons a::after {
+            content: attr(data-tooltip); 
+            position: absolute;
+            bottom: -30px; 
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 50px; /* Redondeado para un aspecto más suave */
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+        .contact-icons a:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px); /* Pequeño desplazamiento hacia arriba */
+        }
+
+        /* WhatsApp Flotante */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50px;
+            padding: 10px 18px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.7);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1100;
+            text-decoration: none;
+            animation: pulse 1.8s infinite cubic-bezier(0.4, 0, 0.6, 1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+        .whatsapp-float i {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        .whatsapp-float:hover {
+            background-color: #1da851;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.9);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #111;
+            color: #777;
+            border-top: 1px solid #222;
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out, border 0.3s ease-out;
+            text-align: left;
+            border: 2px solid transparent;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+            border: 2px solid #00ffff;
+        }
+
+        .modal-title {
+            color: #CDA434;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-body {
+            color: #ccc;
+            font-size: 1.1rem;
+            line-height: 1.6; 
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #ccc;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+
+        /* Media Queries para Responsividad */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            .header-content {
+                flex-direction: column;
+                margin-bottom: 15px;
+            }
+            .header-right-items {
+                flex-direction: row;
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            nav {
+                margin-top: 0;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            nav a {
+                margin: 5px 10px;
+            }
+            .language-switcher {
+                margin-top: 0;
+                margin-left: 0;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+                letter-spacing: 0.03em;
+            }
+            .card {
+                width: 90%;
+            }
+            .card h3 {
+                letter-spacing: 0.02em;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            .modal-body {
+                font-size: 1rem;
+            }
+            footer {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo">Tonix TX</div>
+        <div class="header-right-items">
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#portfolio">Portafolio</a>
+                <a href="#testimonios">Reseñas</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <div class="language-switcher" onclick="toggleLanguage()">
+                <i class="fas fa-globe"></i>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="hero" id="inicio">
+    <h1 data-es="Impulsa tu éxito digital" data-en="Propel your digital success">Impulsa tu éxito digital</h1>
+    <p data-es="Diseño web, chatbots y automatización a tu medida." data-en="Web design, chatbots, and automation tailored to you.">Diseño web, chatbots y automatización a tu medida.</p>
+</section>
+
+<section class="services" id="servicios">
+    <h2 class="section-title" data-es="Servicios" data-en="Services">Servicios</h2>
+    <div class="container">
+        <div class="card" onclick="openModal(this, 'service')">
+            <h3><span data-es="Diseño Web" data-en="Web Design">Diseño Web</span></h3>
+            <p data-es="Sitios modernos y optimizados." data-en="Modern and optimized websites."
+               data-full-es="Creamos sitios profesionales, responsivos y adaptados a tu negocio con diseño atractivo y funcional. Nos enfocamos en la experiencia de usuario y la optimización SEO para asegurar que tu presencia digital sea efectiva y rentable, generando más leads y ventas."
+               data-full-en="We create professional, responsive websites tailored to your business with attractive and functional design. We focus on user experience and SEO optimization to ensure your digital presence is effective and profitable, generating more leads and sales.">Sitios modernos y optimizados.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'service')">
+            <h3><span data-es="Chatbots" data-en="Chatbots">Chatbots</span></h3>
+            <p data-es="IA para atención automatizada." data-en="AI for automated customer service."
+               data-full-es="Desarrollamos bots inteligentes para WhatsApp que responden por ti 24/7 con flujos personalizados, resolviendo dudas y guiando a tus clientes a través del embudo de ventas. Ahorra tiempo, mejora tu servicio al cliente y no pierdas ninguna oportunidad de negocio."
+               data-full-en="We develop intelligent WhatsApp bots that respond for you 24/7 with personalized flows, answering questions and guiding your customers through the sales funnel. Save time, improve your customer service, and don't miss any business opportunities.">IA para atención automatizada.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'service')">
+            <h3><span data-es="Automatización" data-en="Automation">Automatización</span></h3>
+            <p data-es="Procesos automáticos eficientes." data-en="Efficient automatic processes."
+               data-full-es="Automatiza tareas repetitivas como respuestas a correos, envíos de información, gestión de pagos, seguimiento de clientes y más, liberando tu tiempo para enfocarte en el crecimiento estratégico de tu negocio. Optimiza tus operaciones y aumenta tu productividad."
+               data-full-en="Automate repetitive tasks such as email replies, information dissemination, payment management, customer follow-ups, and more, freeing up your time to focus on strategic business growth. Optimize your operations and boost your productivity.">Procesos automáticos eficientes.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'service')">
+            <h3><span data-es="Mantenimiento y Soporte" data-en="Maintenance & Support">Mantenimiento y Soporte</span></h3>
+            <p data-es="Asegura el rendimiento y la seguridad de tu plataforma." data-en="Ensure the performance and security of your platform."
+               data-full-es="Garantizamos el funcionamiento óptimo de tu sitio web y sistemas con actualizaciones constantes, monitoreo de seguridad, backups y soporte técnico especializado para resolver cualquier incidencia rápidamente. Tu tranquilidad es nuestra prioridad."
+               data-full-en="We guarantee the optimal functioning of your website and systems with constant updates, security monitoring, backups, and specialized technical support to quickly resolve any incidents. Your peace of mind is our priority.">Asegura el rendimiento y la seguridad de tu plataforma.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'about')">
+            <h3><span data-es="Acerca de Nosotros" data-en="About Us">Acerca de Nosotros</span></h3>
+            <p data-es="Descubre quiénes somos y nuestra misión." data-en="Learn about who we are and our mission."
+               data-full-es="En Tonix TX, somos tus aliados estratégicos en el universo digital. Nuestra pasión por la tecnología y el compromiso con tus objetivos nos impulsan a crear soluciones innovadoras. Nos especializamos en diseño web de vanguardia, chatbots inteligentes y automatización de procesos a tu medida. Ofrecemos más que servicios: construimos relaciones duraderas con resultados tangibles y medibles. Desde la primera conversación hasta el soporte continuo, te acompañamos para desbloquear el verdadero potencial de tu marca y llevarla al siguiente nivel."
+               data-full-en="At Tonix TX, we're your strategic allies in the digital universe. Our passion for technology and commitment to your goals drive us to create innovative solutions. We specialize in cutting-edge web design, intelligent chatbots, and tailored process automation. We offer more than services: we build lasting relationships with tangible, measurable results. From the first conversation to ongoing support, we're with you every step of the way to unlock your brand's true potential and take it to the next level.">Descubre quiénes somos y nuestra misión.</p>
+        </div>
+    </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+    <h2 class="section-title" data-es="Portafolio" data-en="Portfolio">Portafolio</h2>
+    <div class="container">
+        <div class="card" onclick="openModal(this, 'portfolio')">
+            <h3><span data-es="Café Central" data-en="Central Coffee">Café Central</span></h3>
+            <p data-es="Diseño responsivo para cafetería." data-en="Responsive design for coffee shop."
+               data-full-es="Página web elegante y responsiva para una cafetería, con menú digital interactivo, galería de imágenes, sección de contacto y enlaces directos a sus redes sociales. Un diseño que captura la esencia del café y atrae a los clientes."
+               data-full-en="Elegant and responsive website for a coffee shop, featuring an interactive digital menu, image gallery, contact section, and direct links to their social media. A design that captures the essence of coffee and attracts customers.">Diseño responsivo para cafetería.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'portfolio')">
+            <h3><span data-es="Bot WhatsApp" data-en="WhatsApp Bot">Bot WhatsApp</span></h3>
+            <p data-es="Respuestas automáticas por chat." data-en="Automated chat responses."
+               data-full-es="Implementación de un flujo de atención al cliente automatizado para negocios en WhatsApp, capaz de responder preguntas frecuentes, tomar pedidos básicos y guiar a los usuarios 24/7. Esto libera al personal para tareas más complejas."
+               data-full-en="Implementation of an automated customer service flow for businesses on WhatsApp, capable of answering frequently asked questions, taking basic orders, and guiding users 24/7. This frees up staff for more complex tasks.">Respuestas automáticas por chat.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'portfolio')">
+            <h3><span data-es="Tienda Ropa" data-en="Clothing Store">Tienda Ropa</span></h3>
+            <p data-es="Diseño moderno con catálogo." data-en="Modern design with catalog."
+               data-full-es="Creación de una tienda online de ropa con un diseño moderno, catálogo de productos interactivo, funciones de carrito de compras y adaptación completa para dispositivos móviles. Una experiencia de compra fluida y atractiva para los clientes."
+               data-full-en="Creation of a modern online clothing store with an interactive product catalog, shopping cart functionalities, and full adaptation for mobile devices. A smooth and attractive shopping experience for customers.">Diseño moderno con catálogo.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'portfolio')">
+            <h3><span data-es="Landing Corporativa" data-en="Corporate Landing">Landing Corporativa</span></h3>
+            <p data-es="Landing page profesional." data-en="Professional landing page."
+               data-full-es="Diseño y desarrollo de una landing page profesional optimizada para la conversión de clientes, ideal para consultores, agencias o marcas personales que buscan una presencia impactante y efectiva en línea."
+               data-full-en="Design and development of a professional landing page optimized for customer conversion, ideal for consultants, agencies, or personal brands seeking an impactful and effective online presence.">Landing page profesional.</p>
+        </div>
+        <div class="card" onclick="openModal(this, 'portfolio')">
+            <h3><span data-es="Restaurante App" data-en="Restaurant App">Restaurante App</span></h3>
+            <p data-es="Menú digital con pedidos." data-en="Digital menu con pedidos."
+               data-full-es="Desarrollo de una aplicación web progresiva (PWA) para restaurantes, permitiendo a los clientes explorar el menú, realizar pedidos y gestionar pagos directamente desde sus smartphones, mejorando la eficiencia del servicio."
+               data-full-en="Development of a progressive web application (PWA) for restaurants, allowing customers to browse the menu, place orders, and manage payments directly from their smartphones, improving service efficiency.">Menú digital con pedidos.</p>
+        </div>
+    </div>
+</section>
+
+<section class="reviews" id="testimonios">
+    <h2 class="section-title" data-es="Reseñas" data-en="Reviews">Reseñas</h2>
+    <div class="container">
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Laura Gómez" data-en="Laura Gómez">Laura Gómez</h3>
+            <p data-es="El sitio quedó espectacular, superó nuestras expectativas con un diseño moderno y funcional. El proceso fue muy fluido y el equipo siempre estuvo atento a nuestras necesidades. ¡Altamente recomendados!"
+               data-en="The site turned out spectacular, exceeding our expectations with a modern and functional design. The process was very smooth, and the team was always attentive to our needs. Highly recommended!">
+                "El sitio quedó espectacular."
+            </p>
+            <div class="profile"><strong>Laura Gómez</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Carlos Méndez" data-en="Carlos Méndez">Carlos Méndez</h3>
+            <p data-es="El bot me ahorra tiempo diario y ha mejorado la atención a nuestros clientes de forma significativa. Las respuestas son precisas y personalizadas, lo que ha optimizado nuestras operaciones. ¡Es una herramienta indispensable!"
+               data-en="The bot saves me daily time and has significantly improved our customer service. The responses are accurate and personalized, which has optimized our operations. It’s an indispensable tool!">
+                "El bot me ahorra tiempo diario."
+            </p>
+            <div class="profile"><strong>Carlos Méndez</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Marco Ruiz" data-en="Marco Ruiz">Marco Ruiz</h3>
+            <p data-es="Todo muy profesional desde el primer contacto hasta la entrega final del proyecto. La comunicación fue excelente y los resultados son justo lo que esperábamos. Sin duda, volveremos a trabajar con ellos."
+               data-en="Everything was very professional from the first contact to the final delivery of the project. Communication was excellent, and the results are exactly what we expected. We will definitely work with them again.">
+                "Todo muy profesional."
+            </p>
+            <div class="profile"><strong>Marco Ruiz</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Andrea Torres" data-en="Andrea Torres">Andrea Torres</h3>
+            <p data-es="El soporte increíble, siempre disponibles para resolver cualquier duda o problema que surgiera. La paciencia y el conocimiento del equipo hacen toda la diferencia. ¡Un servicio al cliente de primera!"
+               data-en="Incredible support, always available to resolve any questions or issues that arose. The team’s patience and knowledge make all the difference. Top-notch customer service!">
+                "Soporte increíble."
+            </p>
+            <div class="profile"><strong>Andrea Torres</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Sofía Ramírez" data-en="Sofía Ramírez">Sofía Ramírez</h3>
+            <p data-es="Automatizar fue clave para escalar nuestro negocio. Ahora somos mucho más eficientes y podemos dedicarnos a lo que realmente importa. ¡Una inversión que vale cada centavo!"
+               data-en="Automating was key to scaling our business. Now we are much more efficient and can dedicate ourselves to what truly matters. An investment worth every penny!">
+                "Automatizar fue clave."
+            </p>
+            <div class="profile"><strong>Sofía Ramírez</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Héctor Lara" data-en="Héctor Lara">Héctor Lara</h3>
+            <p data-es="Mi marca ahora se ve pro y eso se refleja en la confianza de mis clientes. El diseño es moderno y capta la esencia de mi negocio. ¡Gracias por el excelente trabajo!"
+               data-en="My brand now looks professional, and that reflects in my clients\' confidence. The design is modern and captures the essence of my business. Thank you for the excellent work!">
+                "Mi marca ahora se ve pro."
+            </p>
+            <div class="profile"><strong>Héctor Lara</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Paola Ríos" data-en="Paola Ríos">Paola Ríos</h3>
+            <p data-es="Me encantó el diseño final de mi página web, es justo lo que imaginaba y más. La interfaz es intuitiva y el aspecto visual es impresionante. ¡Totalmente satisfecho con el resultado!"
+               data-en="I loved the final design of my website, it\'s exactly what I imagined and more. The interface is intuitive and the visual aspect is impressive. Totally satisfied with the result!">
+                "Me encantó el diseño final."
+            </p>
+            <div class="profile"><strong>Paola Ríos</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="David Sánchez" data-en="David Sánchez">David Sánchez</h3>
+            <p data-es="Cumplieron todo a tiempo y con una calidad impecable. La gestión del proyecto fue excelente y se preocuparon por cada detalle. ¡Un equipo en el que se puede confiar plenamente!"
+               data-en="They delivered everything on time and with impeccable quality. The project management was excellent, and they cared about every detail. A team you can fully trust!">
+                "Cumplieron todo a tiempo."
+            </p>
+            <div class="profile"><strong>David Sánchez</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Valeria Castro" data-en="Valeria Castro">Valeria Castro</h3>
+            <p data-es="La implementación de la plataforma fue impecable y superó nuestras expectativas. La consultoría fue muy valiosa, ayudándonos a definir una estrategia digital clara y efectiva que ya está dando frutos. ¡Excelente servicio y resultados tangibles!"
+               data-en="The platform implementation was flawless and exceeded our expectations. The consulting was very valuable, helping us define a clear and effective digital strategy that is already bearing fruit. Excellent service and tangible results!">
+                "¡Impresionante implementación!"
+            </p>
+            <div class="profile"><strong>Valeria Castro</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Ricardo Flores" data-en="Ricardo Flores">Ricardo Flores</h3>
+            <p data-es="El chatbot ha transformado nuestra atención al cliente. Es increíble ver cómo las consultas se resuelven de manera eficiente y automática, liberando a nuestro equipo para tareas más complejas. ¡Una solución inteligente y muy rentable!"
+               data-en="The chatbot has transformed our customer service. It’s incredible to see how queries are resolved efficiently and automatically, freeing up our team for more complex tasks. A smart and very cost-effective solution!">
+                "¡El chatbot es un éxito!"
+            </p>
+            <div class="profile"><strong>Ricardo Flores</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Sofía Vargas" data-en="Sofía Vargas">Sofía Vargas</h3>
+            <p data-es="La automatización de procesos ha optimizado enormemente nuestras operaciones. Desde la gestión de pedidos hasta el seguimiento de clientes, todo es más rápido y preciso. ¡Nos ha permitido crecer sin aumentar los costos operativos!"
+               data-en="Process automation has greatly optimized our operations. From order management to customer tracking, everything is faster and more accurate. It has allowed us to grow without increasing operational operations!">
+                "¡Productividad al máximo!"
+            </p>
+            <div class="profile"><strong>Sofía Vargas</strong></div>
+        </div>
+        <div class="card" onclick="openModal(this, 'review')">
+            <h3 data-es="Gustavo Rivas" data-en="Gustavo Rivas">Gustavo Rivas</h3>
+            <p data-es="Desde el diseño inicial hasta el lanzamiento, todo el equipo de Tonix TX demostró un profesionalismo excepcional. La página web no solo es visualmente atractiva, sino que también es muy intuitiva y funcional, lo que ha mejorado la experiencia de nuestros usuarios. ¡Estamos encantados con el resultado final!"
+               data-en="From initial design to launch, the entire Tonix TX team demonstrated exceptional professionalism. The website is not only visually appealing but also very intuitive and functional, which has has improved our users\' experience. We are delighted with the final result!">
+                "¡Trabajo excepcional!"
+            </p>
+            <div class="profile"><strong>Gustavo Rivas</strong></div>
+        </div>
+    </div>
+</section>
+
+<section class="contact" id="contacto">
+    <h2 class="section-title" data-es="Redes Sociales" data-en="Social Media">Redes Sociales</h2>
+    <div class="contact-icons">
+        <a href="https://www.facebook.com/profile.php?id=61576346733311" target="_blank" data-tooltip="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/5215549416177" target="_blank" data-tooltip="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.instagram.com/tonix_dix?igsh=eDQ1MWdrajRwa2l6" target="_blank" data-tooltip="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+</section>
+
+<a href="https://wa.me/5215549416177" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+</a>
+
+<footer>
+    <span data-es="© 2025 Tonix TX. Todos los derechos reservados." data-en="© 2025 Tonix TX. All rights reserved.">© 2025 Tonix TX. Todos los derechos reservados.</span>
+</footer>
+
+<div class="modal-overlay" id="infoModalOverlay">
+    <div class="modal-content" id="infoModalContent">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-body" id="modalBody"></p>
+    </div>
+</div>
+
+<script>
+    function openModal(card, type) {
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalOverlay = document.getElementById('infoModalOverlay');
+        const currentLang = document.documentElement.lang;
+
+        let titleText = '';
+        let fullText = '';
+
+        if (type === 'service' || type === 'portfolio' || type === 'about') {
+            const titleSpan = card.querySelector('h3 span');
+            const descriptionElement = card.querySelector('p[data-full-es]');
+            
+            titleText = currentLang === 'es' ? titleSpan.dataset.es : titleSpan.dataset.en;
+            fullText = currentLang === 'es' ? descriptionElement.dataset.fullEs : descriptionElement.dataset.fullEn;
+
+        } else if (type === 'review') {
+            const titleElement = card.querySelector('h3');
+            const reviewTextElement = card.querySelector('p[data-es][data-en]'); // Asegurarse de seleccionar el párrafo con data-es/en
+            
+            titleText = currentLang === 'es' ? titleElement.dataset.es : titleElement.dataset.en;
+            fullText = currentLang === 'es' ? reviewTextElement.dataset.es : reviewTextElement.dataset.en;
+        }
+
+        modalTitle.textContent = titleText;
+        modalBody.textContent = fullText;
+        modalOverlay.classList.add('active');
+    }
+
+    function closeModal() {
+        const modalOverlay = document.getElementById('infoModalOverlay');
+        modalOverlay.classList.remove('active');
+    }
+
+    document.getElementById('infoModalOverlay').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeModal();
+        }
+    });
+
+    function toggleLanguage() {
+        const htmlTag = document.documentElement;
+        const currentLang = htmlTag.lang;
+        const newLang = currentLang === 'es' ? 'en' : 'es';
+        htmlTag.lang = newLang;
+
+        document.querySelectorAll('[data-es], [data-en]').forEach(element => {
+            // Excluir elementos dentro de nav para manejar su texto por separado si es necesario
+            if (!element.closest('nav')) { 
+                const isReviewCardParagraph = element.closest('.reviews .card') && element.tagName === 'P';
+                const isReviewCardH3 = element.closest('.reviews .card') && element.tagName === 'H3';
+                const isServicePortfolioAboutParagraph = element.tagName === 'P' && (element.hasAttribute('data-full-es') || element.hasAttribute('data-full-en'));
+                
+                // Para títulos de servicio/portafolio/about que están dentro de un span
+                let targetElement = element;
+                if (element.tagName === 'H3' && element.querySelector('span')) {
+                    targetElement = element.querySelector('span');
+                }
+
+                if (newLang === 'es') {
+                    if (isReviewCardParagraph) {
+                        const text = element.dataset.es;
+                        element.textContent = text.length > 97 ? text.substring(0, 97) + '...' : text;
+                    } else if (targetElement.dataset.es) { 
+                        targetElement.textContent = targetElement.dataset.es;
+                    }
+                } else if (newLang === 'en') {
+                    if (isReviewCardParagraph) {
+                        const text = element.dataset.en;
+                        element.textContent = text.length > 97 ? text.substring(0, 97) + '...' : text;
+                    } else if (targetElement.dataset.en) {
+                        targetElement.textContent = targetElement.dataset.en;
+                    }
+                }
+            }
+        });
+
+        // Manejar los enlaces de navegación por separado si su texto no se actualiza con la lógica anterior
+        document.querySelectorAll('nav a').forEach(link => {
+            const href = link.getAttribute('href').substring(1);
+            let esText;
+            let enText;
+            switch(href) {
+                case 'inicio': esText = 'Inicio'; enText = 'Home'; break;
+                case 'servicios': esText = 'Servicios'; enText = 'Services'; break;
+                case 'portfolio': esText = 'Portafolio'; enText = 'Portfolio'; break;
+                case 'testimonios': esText = 'Reseñas'; enText = 'Reviews'; break;
+                case 'contacto': esText = 'Contacto'; enText = 'Contact'; break;
+                default: esText = ''; enText = '';
+            }
+            link.textContent = newLang === 'es' ? esText : enText;
+        });
+
+        // Reabrir el modal con el idioma correcto si estaba abierto
+        const modalOverlay = document.getElementById('infoModalOverlay');
+        if (modalOverlay.classList.contains('active')) {
+            // Necesitamos recrear qué tarjeta estaba abierta para volver a abrir el modal
+            // Esto es más complejo. Para simplificar, cerraremos el modal al cambiar de idioma.
+            // Si el usuario quiere el contenido en el nuevo idioma, puede volver a abrirlo.
+            closeModal(); 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.documentElement.lang = 'es';
+        
+        // Inicializar textos en español al cargar la página
+        document.querySelectorAll('[data-es]').forEach(element => {
+            if (!element.closest('nav')) { 
+                const isReviewCardParagraph = element.closest('.reviews .card') && element.tagName === 'P';
+                
+                let targetElement = element;
+                if (element.tagName === 'H3' && element.querySelector('span')) {
+                    targetElement = element.querySelector('span');
+                }
+
+                if (isReviewCardParagraph) {
+                    const text = element.dataset.es;
+                    element.textContent = text.length > 97 ? text.substring(0, 97) + '...' : text;
+                } else if (targetElement.dataset.es) {
+                    targetElement.textContent = targetElement.dataset.es;
+                }
+            }
+        });
+
+        // Inicializar enlaces de navegación en español
+        document.querySelectorAll('nav a').forEach(link => {
+            const href = link.getAttribute('href').substring(1);
+            let esText;
+            switch(href) {
+                case 'inicio': esText = 'Inicio'; break;
+                case 'servicios': esText = 'Servicios'; break;
+                case 'portfolio': esText = 'Portafolio'; break;
+                case 'testimonios': esText = 'Reseñas'; break;
+                case 'contacto': esText = 'Contacto'; break;
+                default: esText = '';
+            }
+            link.textContent = esText;
+        });
+    });
+</script>
+</body>
+</html>
